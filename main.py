@@ -1,3 +1,5 @@
+import csv
+from datetime import date
 import requests
 from bs4 import BeautifulSoup as bs4
 
@@ -20,12 +22,21 @@ def launch_parser():
         push_req = session.get(url, headers=headers)
         if push_req.status_code == 200:
             soup = bs4(push_req.content, 'html.parser')
-            divs = soup.find_all('div', attrs={'class': 'news-item__content'})
+            divs = soup.find_all('div', attrs={'class': 'news-item'})
             for div in divs:
+                date_and_time = str(date.today()) + ' ' + str(div.find('div', attrs={'class': 'news-item__time'}).text)
                 title = div.find('a').text
-                link = div.find('a')['href']
-                print(title)
-                print('https://championat.com/' + link)
+                link = 'https://championat.com/' + str(div.find('a')['href'])
+
+                with open(f'data.csv', 'a', newline='', encoding='utf-8') as file:
+                    writer = csv.writer(file)
+                    writer.writerow(
+                        (
+                            date_and_time,
+                            title,
+                            link,
+                        )
+                    )
         else:
             print("Error")
 
