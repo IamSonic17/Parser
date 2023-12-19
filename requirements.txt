@@ -7,3 +7,4 @@ soupsieve==2.5
 urllib3==2.1.0
 
 schedule~=1.2.1
+pytz~=2023.3.post1
