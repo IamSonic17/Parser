@@ -31,7 +31,7 @@ def launch_parser():
                 title = div.find('a').text
                 link = 'https://championat.com/' + str(div.find('a')['href'])
                 flag = 0
-                with open('data.csv', 'r') as file:
+                with open('data.csv', 'r', encoding='utf-8') as file:
                     reader = csv.reader(file)
                     for row in reader:
                         if title not in row:
